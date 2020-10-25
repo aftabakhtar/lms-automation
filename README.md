@@ -38,6 +38,6 @@ For the **first and only time**, you would have to specify your `browser` and th
 You can specify browser and driver name as following:
 
 ```bash
-python3 deadlines.py --driver=chrome --os=linux
+python3 deadlines.py --browser=chrome --os=linux
 ```
 
