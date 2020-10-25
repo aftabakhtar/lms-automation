@@ -1,14 +1,51 @@
 import sys
 import getpass
 import datetime
+import argparse
 from terminaltables import AsciiTable
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options
+
+parser = argparse.ArgumentParser(description='Automatically fetch deadlines from LMS')
+parser.add_argument('--browser', type=str, help='specify the browser i.e --browser=chrome')
+parser.add_argument('--driver', type=str, help='specify name of the web driver i.e --driver-naem=chromedriver')
+
+args = parser.parse_args()
+BROWSER = None
+DRIVER_PATH = None
+
+if args.driver and args.browser:
+    f = open(".config", "w")
+    f.write(args.browser.lower() + "\n")
+    f.write(args.driver.lower())
+    f.close()
+    BROWSER = args.browser.lower()
+    DRIVER_PATH = args.driver.lower()
+
+else:
+    with open(".config") as f:
+        content = f.readlines()
+        DRIVER_PATH = content[1]
+        BROWSER = content[0]
 
 
-options = Options()
-options.headless = True
+if BROWSER == "chrome":
+    from selenium.webdriver.chrome.options import Options
+
+    options = Options()
+    options.headless = True
+    driver = webdriver.Chrome(executable_path="./" + DRIVER_PATH , options=options)
+
+elif BROWSER == "firefox":
+    from selenium.webdriver.firefox.options import Options
+
+    options = Options()
+    options.headless = True
+    driver = webdriver.Firefox(options=options, executable_path=".\\" + DRIVER_PATH)
+
+else:
+    print("Incorrect or Unsupported browser specified")
+    sys.exit(0)
+
 
 if sys.stdin.isatty():
    print("Enter credentials")
@@ -21,9 +58,7 @@ else:
 courses = [['Course', 'Assignment', 'Due Date', 'Done']]
 SUBMITTED = "My submission: Submitted for grading, Not graded"
 
-driver = webdriver.Chrome('./chromedriver', options=options)
 driver.get("https://lms.nust.edu.pk/portal/")
-
 
 # logging in to the lms
 username = driver.find_element_by_xpath('//input[@id="login_username"]')

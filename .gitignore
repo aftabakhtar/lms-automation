@@ -3,3 +3,6 @@ getpass
 sys
 geckodriver.log
 .vscode/settinngs.json
+.config
+chromedriver
+geckodriver
