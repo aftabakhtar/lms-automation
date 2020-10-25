@@ -23,7 +23,7 @@ python3 -m pip install -r requirements.txt
 
 #### Step #2
 
-Download the web driver for the browser you use (links below) and place it in the project directory.
+Download the web driver for the browser you use (links below) and extract it in the project directory.
 
 **Google Chrome / Chromium:** https://chromedriver.chromium.org/downloads
 
@@ -33,7 +33,7 @@ Download the web driver for the browser you use (links below) and place it in th
 
 #### Step #3
 
-For the **first and only time**, you would have to specify your browser and the name of the driver file.
+For the **first and only time**, you would have to specify your `browser` and the name your `OS` (run the same commands if you need to respecify).
 
 You can specify browser and driver name as following:
 
