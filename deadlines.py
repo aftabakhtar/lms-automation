@@ -2,50 +2,34 @@ import sys
 import getpass
 import datetime
 import argparse
+from config import get_driver
 from terminaltables import AsciiTable
 from selenium import webdriver
 
 parser = argparse.ArgumentParser(description='Automatically fetch deadlines from LMS')
 parser.add_argument('--browser', type=str, help='specify the browser i.e --browser=chrome')
-parser.add_argument('--driver', type=str, help='specify name of the web driver i.e --driver-naem=chromedriver')
+parser.add_argument('--os', type=str, help='specify the operating system i.e --os=linux')
 
 args = parser.parse_args()
 BROWSER = None
-DRIVER_PATH = None
+OS = None
 
-if args.driver and args.browser:
+if args.os and args.browser:
     f = open(".config", "w")
-    f.write(args.browser.lower() + "\n")
-    f.write(args.driver.lower())
+    f.write(args.browser.upper() + "\n")
+    f.write(args.os.upper() + "\n")
     f.close()
-    BROWSER = args.browser.lower()
-    DRIVER_PATH = args.driver.lower()
+
+    BROWSER = args.browser.upper()
+    OS = args.os.upper()
 
 else:
     with open(".config") as f:
         content = f.readlines()
-        DRIVER_PATH = content[1]
         BROWSER = content[0]
+        OS = content[1]
 
-
-if BROWSER == "chrome":
-    from selenium.webdriver.chrome.options import Options
-
-    options = Options()
-    options.headless = True
-    driver = webdriver.Chrome(executable_path="./" + DRIVER_PATH , options=options)
-
-elif BROWSER == "firefox":
-    from selenium.webdriver.firefox.options import Options
-
-    options = Options()
-    options.headless = True
-    driver = webdriver.Firefox(options=options, executable_path=".\\" + DRIVER_PATH)
-
-else:
-    print("Incorrect or Unsupported browser specified")
-    sys.exit(0)
-
+driver = get_driver(OS, BROWSER)
 
 if sys.stdin.isatty():
    print("Enter credentials")
