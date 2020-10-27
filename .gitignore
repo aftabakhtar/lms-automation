@@ -2,7 +2,12 @@
 getpass
 sys
 geckodriver.log
-.vscode/settinngs.json
+.vscode/settings.json
 .config
 chromedriver
 geckodriver
+bs4.py
+argparse
+sys
+.key
+.pass

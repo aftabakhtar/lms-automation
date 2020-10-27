@@ -4,8 +4,6 @@
 
 ## Installation
 
-#### Step #1
-
 Cloning repository and installing requirements
 
 ```bash
@@ -21,23 +19,28 @@ python3 -m pip install -r requirements.txt
 
 
 
-#### Step #2
+## Running
 
-Download the web driver for the browser you use (links below) and place it in the project directory.
-
-**Google Chrome / Chromium:** https://chromedriver.chromium.org/downloads
-
-**Firefox:** https://github.com/mozilla/geckodriver/releases
-
-
-
-#### Step #3
-
-For the **first and only time**, you would have to specify your browser and the name of the driver file.
-
-You can specify browser and driver name as following:
+To run simply do:
 
 ```bash
-python3 deadlines.py --driver=chromedriver --browser=chrome
+python3 deadlines.py
 ```
 
+however if you want to save user name and password so that you don't have to enter it everytime. 
+
+**To remember username and password for later use**
+
+```
+python3 deadlines.py --user=USERNAME --pwd=PASSWORD
+```
+
+replace your username and password with `USERNAME` and `PASSWORD` respectively.
+
+After entering your username and password with flags you will not be prompted again.
+
+
+
+### Security Note:
+
+Once a person saves password it is encrypted with a key and stored locally on the computer. Please do not share `.key` and `.pass` files with anyone.
