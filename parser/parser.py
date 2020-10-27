@@ -11,13 +11,13 @@ def parse(user, pwd):
     response = requests.post(url, data={'username': user,
                                            'password': pwd,
                                            'rememberusername': '0'})
-    if not response.status_code == 200:
-        print("Invalid Credentials")
-        sys.exit(0)
-
     html_source = response.text
     tree = html.fromstring(html=html_source)
     course_list = tree.xpath('//div[@id="1"]/div[@id="course_list"]/div')
+    
+    if len(course_list) == 0:
+        print("Invalid Credentials")
+        sys.exit(0)
     
     for course in course_list:
         course_name = course.xpath('//div[@id="' + course.get('id') +'"]/div[@class="course_title"]/h2/a/text()')[0].split(' BSCS2k18',1)[0]
