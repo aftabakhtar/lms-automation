@@ -11,7 +11,7 @@ def parse(user, pwd):
     response = requests.post(url, data={'username': user,
                                            'password': pwd,
                                            'rememberusername': '0'})
-    if "close" in response.headers['Connection']:
+    if not response.status_code == 200:
         print("Invalid Credentials")
         sys.exit(0)
 

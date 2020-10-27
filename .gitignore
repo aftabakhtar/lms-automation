@@ -11,3 +11,4 @@ argparse
 sys
 .key
 .pass
+parser/__pycache__
