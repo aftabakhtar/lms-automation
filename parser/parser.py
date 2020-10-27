@@ -22,6 +22,7 @@ def parse(user, pwd):
     for course in course_list:
         course_name = course.xpath('//div[@id="' + course.get('id') +'"]/div[@class="course_title"]/h2/a/text()')[0].split(' BSCS2k18',1)[0]
         assignments_list = course.xpath('//div[@id="' + course.get('id') +'"]/div[@class="activity_info"]//div[@class="name"]/a/text()')
+        assignments_list = [str(i) for i in assignments_list if not "Forum Post" in str(i)]
         due_dates = course.xpath('//div[@id="' + course.get('id') +'"]/div[@class="activity_info"]//div[@class="info"]/text()')
         status = course.xpath('//div[@id="' + course.get('id') +'"]/div[@class="activity_info"]//div[@class="details"]/text()')
         due_dates = [str(i) for i in due_dates if "Due date:" in str(i)]
