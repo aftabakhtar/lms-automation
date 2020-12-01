@@ -48,24 +48,26 @@ def parse(user, pwd):
         assignment_title = tree.xpath('//div[@role="main"]/h2/text()')
         table_information = tree.xpath('//table[@class="generaltable"]//td/text()')
 
-        if 'This is attempt' in table_information[0]:
-            submission_status = table_information[1]
-            due_date = table_information[3]
-        else:
-            submission_status = table_information[0]
-            due_date = table_information[2]
+        if table_information != []:
 
-        course_description += [course_name[8:-13]]
-        course_description += [assignment_title[0][0:17]]
-        course_description += [datetime.datetime.strptime(due_date,"%A, %d %B %Y, %I:%M %p").strftime("%a, %d %b %y, %I:%M%p")]
-        
-        if str(submission_status) == 'Submitted for grading':
-            submission_status = u'\u2714'
-        else:
-            submission_status = u'\u2716'
+            if 'This is attempt' in table_information[0]:
+                submission_status = table_information[1]
+                due_date = table_information[3]
+            else:
+                submission_status = table_information[0]
+                due_date = table_information[2]
 
-        course_description += [submission_status]
-        courses += [course_description]
+            course_description += [course_name[8:-13]]
+            course_description += [assignment_title[0][0:17]]
+            course_description += [datetime.datetime.strptime(due_date,"%A, %d %B %Y, %I:%M %p").strftime("%a, %d %b %y, %I:%M%p")]
+            
+            if str(submission_status) == 'Submitted for grading':
+                submission_status = u'\u2714'
+            else:
+                submission_status = u'\u2716'
+
+            course_description += [submission_status]
+            courses += [course_description]
 
     table = AsciiTable(courses)
     print(table.table)
